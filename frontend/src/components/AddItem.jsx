@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import base_url from "../base_url";
 
 function AddItem({ setShowItem }) {
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ function AddItem({ setShowItem }) {
     };
 
     axios
-      .post("http://localhost:5656/api/inventory", newItem)
+      .post(`${base_url}api/inventory`, newItem)
       .then((response) => {
         console.log("Item added successfully:", response.data);
         setShowItem(false); 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import base_url from "../base_url";
 import AddItem from "../components/AddItem";
 import UpdateFile from "../components/UpdateFile"; 
 
@@ -17,7 +17,7 @@ const AllItem = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5656/api/inventory")
+      .get(`${base_url}api/inventory`)
       .then((response) => {
         setInventory(response.data);
       })

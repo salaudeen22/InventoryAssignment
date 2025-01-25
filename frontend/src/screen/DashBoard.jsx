@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import base_url from "../base_url";
 
 const DashBoard = () => {
   const [totalItems, setTotalItems] = useState(0);
@@ -10,7 +11,7 @@ const DashBoard = () => {
   useEffect(() => {
     // Fetch the data from your API
     axios
-      .get("http://localhost:5656/api/inventory")
+      .get(`${base_url}api/inventory`)
       .then((response) => {
         const items = response.data;
         setTotalItems(items.length);

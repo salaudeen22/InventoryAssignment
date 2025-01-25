@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import base_url from "../base_url";
 
 const UpdateFile = ({ setUpdateShow, selectedItem }) => {
   const [name, setName] = useState(selectedItem.name);
@@ -10,7 +11,7 @@ const UpdateFile = ({ setUpdateShow, selectedItem }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5656/api/inventory/${selectedItem._id}`,
+        `${base_url}api/inventory/${selectedItem._id}`,
         { name, category, quantity }
       );
       console.log("Item updated:", response.data);
