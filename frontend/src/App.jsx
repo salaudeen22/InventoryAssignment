@@ -1,9 +1,16 @@
+import { Route, Routes, Navigate } from "react-router-dom";
+import DashBoard from "./screen/DashBoard";
 
 
 function App() {
   return (
-    <div className='bg-black h-10'>App</div>
-  )
+    <>
+
+      <Routes>
+        <Route path="/" element={<DashBoard />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
