@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import DashBoard from "./screen/DashBoard";
 import Navbar from "./components/Navbar"
 import AllItem from "./screen/AllItem";
@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DashBoard />} />
         <Route path="/AllItem" element={<AllItem/>}/>
+        
       </Routes>
     </>
   );

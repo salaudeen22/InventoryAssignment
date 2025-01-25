@@ -11,6 +11,9 @@ const AllItem = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [error, setError] = useState(null);
   const [sortedCategory, setSortedCategory] = useState('');
+  const [sortQuantity, setSortQuantity] = useState(''); // Added to handle quantity sorting
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
     axios
@@ -28,15 +31,40 @@ const AllItem = () => {
     setSortedCategory(e.target.value);
   };
 
-  const sortedInventory = Inventory.filter(item => item.category.includes(sortedCategory));
+  const handleQuantitySort = (e) => {
+    setSortQuantity(e.target.value);
+  };
+
+  const sortedInventory = Inventory.filter(item => item.category.includes(sortedCategory))
+    .sort((a, b) => {
+      if (sortQuantity === 'asc') {
+        return a.quantity - b.quantity;
+      } else if (sortQuantity === 'desc') {
+        return b.quantity - a.quantity;
+      }
+      return 0;
+    });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedInventory.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
     <div className="container mx-auto px-2">
-      <div className="flex justify-between items-center mb-4">
-        <button className="p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300" onClick={() => setShowItem(!ShowItem)}>
+      <div className="flex flex-col justify-center items-center mb-4 md:flex-row md:justify-between">
+        <button className="p-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300 mb-4 md:mb-0" onClick={() => setShowItem(!ShowItem)}>
           Add Item
         </button>
-        <input type="text" placeholder="Sort by category" className="p-2 border border-gray-300 rounded" value={sortedCategory} onChange={handleSort} />
+        <div className="flex flex-col md:flex-row">
+          <input type="text" placeholder="Sort by category" className="p-2 border border-gray-300 rounded mb-4 md:mb-0 md:mr-4" value={sortedCategory} onChange={handleSort} />
+          <select value={sortQuantity} onChange={handleQuantitySort} className="p-2 border border-gray-300 rounded">
+            <option value="">Sort by Quantity</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
       </div>
 
       {ShowItem && <AddItem setShowItem={setShowItem} />}
@@ -61,7 +89,7 @@ const AllItem = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedInventory.map((item) => (
+            {currentItems.map((item) => (
               <tr
                 key={item._id}
                 className={`border-b border-gray-200 ${
@@ -85,6 +113,13 @@ const AllItem = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="pagination flex justify-center mt-4">
+        {[...Array(Math.ceil(sortedInventory.length / itemsPerPage)).keys()].map((pageNumber) => (
+          <button key={pageNumber} onClick={() => paginate(pageNumber + 1)} className={`px-4 py-2 border border-gray-300 rounded ${currentPage === pageNumber + 1 ? 'bg-blue-500 text-white' : ''}`}>
+            {pageNumber + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

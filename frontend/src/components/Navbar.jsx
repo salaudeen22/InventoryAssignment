@@ -30,9 +30,7 @@ function Navbar() {
         >
           All Items
         </h3>
-        <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer">
-          Item Groups
-        </h3>
+     
       </div>
 
       <div className="md:hidden">
@@ -49,9 +47,7 @@ function Navbar() {
           <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer">
             All Items
           </h3>
-          <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer">
-            Item Groups
-          </h3>
+       
         </div>
       )}
     </div>
