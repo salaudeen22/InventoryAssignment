@@ -41,10 +41,17 @@ function Navbar() {
 
       {showMenu && (
         <div className="absolute top-13  bg-white left-0 right-0 p-4 flex flex-col space-y-4 md:hidden">
-          <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer">
+          <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer"
+          onClick={() => {
+            navigate("/");
+          }}>
             Home
           </h3>
-          <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer">
+          <h3 className="hover:text-yellow-300 transition-colors duration-300 cursor-pointer"
+          onClick={() => {
+            navigate("/AllItem");
+          }}>
+
             All Items
           </h3>
        
