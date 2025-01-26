@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import base_url from "../base_url";
+import Swal from 'sweetalert2'; 
 
 const UpdateFile = ({ setUpdateShow, selectedItem }) => {
   const [name, setName] = useState(selectedItem.name);
@@ -16,22 +17,40 @@ const UpdateFile = ({ setUpdateShow, selectedItem }) => {
       );
       console.log("Item updated:", response.data);
       setUpdateShow(false); 
+      Swal.fire({
+        icon: 'success',
+        title: 'Updated!',
+        text: 'Item has been updated successfully.',
+      });
     } catch (error) {
       console.error("Error updating item:", error);
-   
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
     }
   };
 
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5656/api/inventory/${selectedItem._id}`
+        `${base_url}api/inventory/${selectedItem._id}`
       );
       console.log("Item deleted:", response.data);
       setUpdateShow(false); 
+      Swal.fire({
+        icon: 'success',
+        title: 'Deleted!',
+        text: 'Item has been deleted successfully.',
+      });
     } catch (error) {
       console.error("Error deleting item:", error);
-    
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
     }
   };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import base_url from "../base_url";
+import Swal from 'sweetalert2'; 
 
 function AddItem({ setShowItem }) {
   const [name, setName] = useState("");
@@ -21,9 +22,19 @@ function AddItem({ setShowItem }) {
       .then((response) => {
         console.log("Item added successfully:", response.data);
         setShowItem(false); 
+        Swal.fire({
+          icon: 'success',
+          title: 'Added!',
+          text: 'Item has been added successfully.',
+        });
       })
       .catch((error) => {
         console.error("Error adding item:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        });
       });
   };
 

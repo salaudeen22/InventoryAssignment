@@ -3,6 +3,7 @@ import axios from "axios";
 import base_url from "../base_url";
 import AddItem from "../components/AddItem";
 import UpdateFile from "../components/UpdateFile"; 
+import Swal from 'sweetalert2'; // Added to use SweetAlert
 
 const AllItem = () => {
   const [Inventory, setInventory] = useState([]);
@@ -13,7 +14,7 @@ const AllItem = () => {
   const [sortedCategory, setSortedCategory] = useState('');
   const [sortQuantity, setSortQuantity] = useState(''); // Added to handle quantity sorting
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10); 
 
   useEffect(() => {
     axios
@@ -24,6 +25,12 @@ const AllItem = () => {
       .catch((error) => {
         console.error("Error fetching inventory:", error);
         setError("Failed to load inventory. Please try again.");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href>Why do I have this issue?</a>'
+        });
       });
   }, []);
 
